@@ -1,0 +1,27 @@
+branches:
+  only:
+    - master
+
+dist: trusty
+language: rust
+sudo: false
+
+cache: cargo
+
+rust:
+  - nightly
+
+matrix:
+  allow_failures:
+    - rust: beta
+  fast_finish: true
+
+install:
+  - rustup component add rustfmt
+  - rustup component add clippy
+  - cargo install cargo-update || true
+
+script:
+  - cargo clippy
+  - cargo build --verbose
+  - cargo test --verbose
